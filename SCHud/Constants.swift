@@ -20,3 +20,9 @@ public enum SCCubeTheme {
     ///Custom theme needs 6 requried colors for 6 surface and 1 color for the edges
     case custom(UIColor, UIColor, UIColor, UIColor, UIColor, UIColor, UIColor)
 }
+
+public enum SCBlurEffect {
+    case extraLight
+    case light
+    case dark
+}

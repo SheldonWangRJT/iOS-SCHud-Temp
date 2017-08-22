@@ -14,7 +14,7 @@ open class SCHudView: UIView {
     //ContainerView contains cube
     @IBOutlet private var containerView: UIView!
     //Actual Cube View
-    @IBOutlet var cubeView: UIView!
+    @IBOutlet private var cubeView: UIView!
     //Title is the descprition label
     @IBOutlet private var title: UILabel!
     //BlurEffectView holds all the subviews
@@ -37,9 +37,9 @@ open class SCHudView: UIView {
         didSet {
             switch viewTheme {
             case .blackWhite:
-                blurEffectView.effect = UIBlurEffect(style: .light)
+                viewBlurEffect = .light
             case .rainbow:
-                blurEffectView.effect = UIBlurEffect(style: .dark)
+                viewBlurEffect = .dark
             default:
                 break
             }
@@ -60,8 +60,30 @@ open class SCHudView: UIView {
     //TitleAttributedText will set up attributedText for the title label
     public var titleAttributedText: NSMutableAttributedString?
     
-    //Cube face alpha
+    //CubeFaceAlpha will set the alpha for all the cube faces
     public var cubeFaceAlpha: CGFloat = 0.7
+    
+    //ViewBackGroundColor will set the whole view background color
+    //Note: other color than clear will disable the blur effect
+    public var viewBackgroundColor: UIColor = .clear {
+        didSet {
+            blurEffectView.backgroundColor = viewBackgroundColor
+        }
+    }
+    
+    //ViewBlurEffect will set the blur effect for whole view
+    public var viewBlurEffect: SCBlurEffect = .dark {
+        didSet {
+            switch viewBlurEffect {
+            case .extraLight:
+                blurEffectView.effect = UIBlurEffect(style: .extraLight)
+            case .light:
+                blurEffectView.effect = UIBlurEffect(style: .light)
+            case .dark:
+                blurEffectView.effect = UIBlurEffect(style: .dark)
+            }
+        }
+    }
     
     //MARK: - initialization
     public init() {
@@ -185,16 +207,16 @@ open class SCHudView: UIView {
                 return CGRect(
                     x:0,
                     y:0,
-                    width:frame.height-25-40-12-BORDERWIDTH*2, //width equals height
-                    height:frame.height-25-40-12-BORDERWIDTH*2 //height is self.frame - label height - top & bot cube view space - stack view space - border with offset (2 * 2)
+                    width:frame.height-25-50-15-BORDERWIDTH*2, //width equals height
+                    height:frame.height-25-50-15-BORDERWIDTH*2 //height is self.frame - label height - top & bot cube view space - stack view space - border with offset (2 * 2)
                 )
             }
             else {
                 return CGRect(
                     x:0,
                     y:0,
-                    width:frame.width-20,
-                    height:frame.height-20
+                    width:frame.width-50-BORDERWIDTH*2,
+                    height:frame.height-50-BORDERWIDTH*2
                 )
             }
         }
@@ -291,18 +313,18 @@ open class SCHudView: UIView {
 
     /// Use this function to show the cube onto the desired view
     public func show(to superView: UIView) {
-        let edgeLength = superView.frame.width * viewSize.rawValue
-        frame.size = CGSize(
-            width: edgeLength,
-            height: titleDesc.isEmpty ? edgeLength : edgeLength + 30
-        )
-        center = superView.center
-        createCube(with: viewTheme)
-        title.attributedText = setAttributedString(for: viewTheme, with: titleDesc)
         DispatchQueue.main.async {
+            let edgeLength = superView.frame.width * self.viewSize.rawValue
+            self.frame.size = CGSize(
+                width: edgeLength,
+                height: self.titleDesc.isEmpty ? edgeLength : edgeLength + 25 + 15
+            )
+            self.center = superView.center
+            self.createCube(with: self.viewTheme)
+            self.title.attributedText = self.setAttributedString(for: self.viewTheme, with: self.titleDesc)
             superView.addSubview(self)
+            _ = Timer.scheduledTimer(timeInterval: 0.02, target: self, selector: #selector(self.rotateCube), userInfo: nil, repeats: true)
         }
-        _ = Timer.scheduledTimer(timeInterval: 0.02, target: self, selector: #selector(self.rotateCube), userInfo: nil, repeats: true)
     }
     
     public func hide() {

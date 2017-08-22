@@ -32,14 +32,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Bxr-jS-36c">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Bxr-jS-36c">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7wn-ls-9gP">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="259"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="260"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RcQ-zv-2TR">
-                                                <rect key="frame" x="41" y="20" width="219" height="219"/>
+                                                <rect key="frame" x="45.5" y="25" width="210" height="210"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="RcQ-zv-2TR" secondAttribute="height" multiplier="1:1" id="dLb-gy-6ny"/>
@@ -48,14 +48,14 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="RcQ-zv-2TR" firstAttribute="top" secondItem="7wn-ls-9gP" secondAttribute="top" constant="20" id="7wZ-7E-oTf"/>
-                                            <constraint firstAttribute="bottom" secondItem="RcQ-zv-2TR" secondAttribute="bottom" constant="20" id="RC4-2B-vOh"/>
+                                            <constraint firstItem="RcQ-zv-2TR" firstAttribute="top" secondItem="7wn-ls-9gP" secondAttribute="top" constant="25" id="7wZ-7E-oTf"/>
+                                            <constraint firstAttribute="bottom" secondItem="RcQ-zv-2TR" secondAttribute="bottom" constant="25" id="RC4-2B-vOh"/>
                                             <constraint firstItem="RcQ-zv-2TR" firstAttribute="centerY" secondItem="7wn-ls-9gP" secondAttribute="centerY" id="RbK-Gw-HNF"/>
                                             <constraint firstItem="RcQ-zv-2TR" firstAttribute="centerX" secondItem="7wn-ls-9gP" secondAttribute="centerX" id="gAK-yj-31t"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwh-7A-Rln">
-                                        <rect key="frame" x="10" y="265" width="280" height="25"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwh-7A-Rln">
+                                        <rect key="frame" x="10" y="260" width="280" height="25"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="3jL-K4-J9T"/>
@@ -65,10 +65,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IsG-3F-tJS">
-                                        <rect key="frame" x="0.0" y="296" width="300" height="4"/>
+                                        <rect key="frame" x="0.0" y="285" width="300" height="15"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="4" id="ZM9-J2-uri"/>
+                                            <constraint firstAttribute="height" constant="15" id="ZM9-J2-uri"/>
                                         </constraints>
                                     </view>
                                 </subviews>
