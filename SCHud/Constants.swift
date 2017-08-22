@@ -22,6 +22,7 @@ public enum SCCubeTheme {
 }
 
 public enum SCBlurEffect {
+    case none
     case extraLight
     case light
     case dark

@@ -8,7 +8,25 @@
 
 import UIKit
 
-open class SCHudView: UIView {
+protocol UIViewProtocol {
+}
+extension UIView: UIViewProtocol {
+}
+
+protocol SCHudViewProtocol {
+    var viewSize: SCViewSize { set get }
+    var viewTheme: SCCubeTheme { set get }
+    var titleDesc: String { set get }
+    var titleAttributedText: NSMutableAttributedString? { set get }
+    var cubeFaceAlpha: CGFloat { set get }
+    var viewBackgroundColor: UIColor { set get }
+    var viewBlurEffect: SCBlurEffect { set get }
+    
+    func show(to superView: UIView)
+    func hide()
+}
+
+open class SCHudView: UIView, SCHudViewProtocol {
 
     //MARK: - properties
     //ContainerView contains cube
@@ -17,12 +35,12 @@ open class SCHudView: UIView {
     @IBOutlet private var cubeView: UIView!
     //Title is the descprition label
     @IBOutlet private var title: UILabel!
-    //BlurEffectView holds all the subviews
-    @IBOutlet private var blurEffectView: UIVisualEffectView!
     //BottomSpacingView generates spaces from Title to the bottom
     @IBOutlet private var bottomSpacingView: UIView!
     //EffectView Related
-    @IBOutlet private var effectView: UIVisualEffectView!
+    //BlurEffectView holds all the subviews
+    @IBOutlet private var blurEffectView: UIVisualEffectView!
+    //BlurEffectContantView
     @IBOutlet private var effectContantView: UIView!
     
     //Rotation transform
@@ -37,13 +55,14 @@ open class SCHudView: UIView {
         didSet {
             switch viewTheme {
             case .blackWhite:
-                viewBlurEffect = .light
+                viewBackgroundColor = .white
             case .rainbow:
                 viewBlurEffect = .dark
+                viewBackgroundColor = .clear
             default:
+                viewBackgroundColor = .white
                 break
             }
-            effectContantView.backgroundColor = .clear
         }
     }
     //TitleDesc will set the Title.text
@@ -67,7 +86,13 @@ open class SCHudView: UIView {
     //Note: other color than clear will disable the blur effect
     public var viewBackgroundColor: UIColor = .clear {
         didSet {
-            blurEffectView.backgroundColor = viewBackgroundColor
+            if viewBackgroundColor != .clear {
+                applyShadow()
+                blurEffectView.effect = nil
+            } else {
+                removeShadow()
+            }
+            effectContantView.backgroundColor = viewBackgroundColor
         }
     }
     
@@ -75,6 +100,8 @@ open class SCHudView: UIView {
     public var viewBlurEffect: SCBlurEffect = .dark {
         didSet {
             switch viewBlurEffect {
+            case .none:
+                blurEffectView.effect = nil
             case .extraLight:
                 blurEffectView.effect = UIBlurEffect(style: .extraLight)
             case .light:
@@ -124,6 +151,10 @@ open class SCHudView: UIView {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowOpacity = 0.5
+    }
+    
+    private func removeShadow() {
+        layer.shadowColor = UIColor.clear.cgColor
     }
     
     // Create font style
@@ -197,7 +228,7 @@ open class SCHudView: UIView {
         }
     }
     
-    func createTransformLayer(_ colors: [UIColor]) {
+    private func createTransformLayer(_ colors: [UIColor]) {
         let BORDERWIDTH: CGFloat = 1
         
         // MARK: - internal function calculate frame

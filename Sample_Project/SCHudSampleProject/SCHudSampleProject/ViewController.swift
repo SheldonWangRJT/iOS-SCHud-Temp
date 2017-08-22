@@ -16,7 +16,10 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         let hud = SCHudView()
         hud.viewSize = .medium
-        //hud.viewTheme = .rainbow
+        hud.viewTheme = .rainbow
+        //hud.viewBackgroundColor = .clear
+        //hud.viewBlurEffect = .none
+        
         hud.titleDesc = "Loading..."
         hud.show(to: view)
     }

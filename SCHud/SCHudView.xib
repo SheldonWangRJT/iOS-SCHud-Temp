@@ -17,7 +17,6 @@
                 <outlet property="containerView" destination="7wn-ls-9gP" id="F5u-fO-egn"/>
                 <outlet property="cubeView" destination="RcQ-zv-2TR" id="mPs-0E-PGc"/>
                 <outlet property="effectContantView" destination="8JI-jA-MRS" id="266-4y-JU2"/>
-                <outlet property="effectView" destination="OBz-kQ-RR6" id="Ew2-ZG-R4d"/>
                 <outlet property="title" destination="Lwh-7A-Rln" id="MUp-PV-RM2"/>
             </connections>
         </placeholder>
@@ -82,7 +81,7 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Bxr-jS-36c" firstAttribute="top" secondItem="8JI-jA-MRS" secondAttribute="top" id="ELV-nf-WZX"/>
                             <constraint firstAttribute="trailing" secondItem="Bxr-jS-36c" secondAttribute="trailing" id="nor-ex-BRi"/>

@@ -13,6 +13,7 @@
 		6BDAE5E61F466E7F0004771C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BDAE5E51F466E7F0004771C /* Assets.xcassets */; };
 		6BDAE5E91F466E7F0004771C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BDAE5E71F466E7F0004771C /* LaunchScreen.storyboard */; };
 		6BDAE6061F4670630004771C /* SCHud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BDAE6051F4670630004771C /* SCHud.framework */; };
+		6BDAE60F1F4C6D0D0004771C /* img.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BDAE60E1F4C6D0D0004771C /* img.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		6BDAE5EA1F466E7F0004771C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BDAE6001F466F810004771C /* SCHud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SCHud.framework; sourceTree = "<group>"; };
 		6BDAE6051F4670630004771C /* SCHud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SCHud.framework; sourceTree = "<group>"; };
+		6BDAE60E1F4C6D0D0004771C /* img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				6BDAE5E51F466E7F0004771C /* Assets.xcassets */,
 				6BDAE5E71F466E7F0004771C /* LaunchScreen.storyboard */,
 				6BDAE5EA1F466E7F0004771C /* Info.plist */,
+				6BDAE60E1F4C6D0D0004771C /* img.png */,
 				6BDAE6051F4670630004771C /* SCHud.framework */,
 			);
 			path = SCHudSampleProject;
@@ -133,6 +136,7 @@
 				6BDAE5E91F466E7F0004771C /* LaunchScreen.storyboard in Resources */,
 				6BDAE5E61F466E7F0004771C /* Assets.xcassets in Resources */,
 				6BDAE5E41F466E7F0004771C /* Main.storyboard in Resources */,
+				6BDAE60F1F4C6D0D0004771C /* img.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
