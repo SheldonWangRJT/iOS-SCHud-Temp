@@ -1,0 +1,10 @@
+framework module SCHud {
+  umbrella header "SCHud.h"
+
+  export *
+  module * { export * }
+}
+
+module SCHud.Swift {
+    header "SCHud-Swift.h"
+}
