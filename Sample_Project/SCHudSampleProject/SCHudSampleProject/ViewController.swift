@@ -15,20 +15,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         let hud = SCHudView()
-        hud.viewSize = .medium
+        hud.viewSize = .large
         hud.viewTheme = .rainbow
-        //hud.viewBackgroundColor = .clear
-        //hud.viewBlurEffect = .none
         
         hud.titleDesc = "Loading..."
         hud.show(to: view)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     
 }
 

@@ -21,6 +21,7 @@ protocol SCHudViewProtocol {
     var cubeFaceAlpha: CGFloat { set get }
     var viewBackgroundColor: UIColor { set get }
     var viewBlurEffect: SCBlurEffect { set get }
+    var userGestureEnabled: Bool { set get }
     
     func show(to superView: UIView)
     func hide()
@@ -29,6 +30,9 @@ protocol SCHudViewProtocol {
 open class SCHudView: UIView, SCHudViewProtocol {
 
     //MARK: - properties
+    //Constraints for spacing cube inside containerView
+    @IBOutlet private var topConstraint: NSLayoutConstraint!
+    @IBOutlet private var botConstraint: NSLayoutConstraint!
     //ContainerView contains cube
     @IBOutlet private var containerView: UIView!
     //Actual Cube View
@@ -47,10 +51,18 @@ open class SCHudView: UIView, SCHudViewProtocol {
     private var rotationTransform: CATransform3D = CATransform3DIdentity
     private var cube3dLayer = CATransformLayer()
     
+    //Gesture management 
+    private var addedGestures = [UIGestureRecognizer]()
+    
     //Style related
     //ViewSize sets the whole loading view size
-    public var viewSize: SCViewSize = .medium
-    //
+    public var viewSize: SCViewSize = .medium {
+        didSet {
+            topConstraint.constant = viewSize.rawValue * 100
+            botConstraint.constant = viewSize.rawValue * 100
+        }
+    }
+    //ViewTheme sets the color theme for the cube, there are two default theme available
     public var viewTheme: SCCubeTheme = .blackWhite {
         didSet {
             switch viewTheme {
@@ -59,6 +71,7 @@ open class SCHudView: UIView, SCHudViewProtocol {
             case .rainbow:
                 viewBlurEffect = .dark
                 viewBackgroundColor = .clear
+                userGestureEnabled = true
             default:
                 viewBackgroundColor = .white
                 break
@@ -112,6 +125,9 @@ open class SCHudView: UIView, SCHudViewProtocol {
         }
     }
     
+    //UserGestureEnabled enables the tap, pan, pinch gestures to transform, default is false.
+    public var userGestureEnabled: Bool = false
+    
     //MARK: - initialization
     public init() {
         super.init(frame: CGRect.zero)
@@ -143,6 +159,7 @@ open class SCHudView: UIView, SCHudViewProtocol {
     }
     
     private func initTransform() {
+        rotationTransform = CATransform3DIdentity
         rotationTransform.m34 = 1 / -600
     }
     
@@ -238,16 +255,16 @@ open class SCHudView: UIView, SCHudViewProtocol {
                 return CGRect(
                     x:0,
                     y:0,
-                    width:frame.height-25-50-15-BORDERWIDTH*2, //width equals height
-                    height:frame.height-25-50-15-BORDERWIDTH*2 //height is self.frame - label height - top & bot cube view space - stack view space - border with offset (2 * 2)
+                    width:frame.height-25-topConstraint.constant*2-15-BORDERWIDTH*2, //width equals height
+                    height:frame.height-25-topConstraint.constant*2-15-BORDERWIDTH*2 //height is self.frame - label height - top & bot cube view space - stack view space - border with offset (2 * 2)
                 )
             }
             else {
                 return CGRect(
                     x:0,
                     y:0,
-                    width:frame.width-50-BORDERWIDTH*2,
-                    height:frame.height-50-BORDERWIDTH*2
+                    width:frame.width-topConstraint.constant*2-BORDERWIDTH*2,
+                    height:frame.height-topConstraint.constant*2-BORDERWIDTH*2
                 )
             }
         }
@@ -342,6 +359,7 @@ open class SCHudView: UIView, SCHudViewProtocol {
         cube3dLayer.transform = rotationTransform
     }
 
+    // MARK: - Main functions to show and hide the hud
     /// Use this function to show the cube onto the desired view
     public func show(to superView: UIView) {
         DispatchQueue.main.async {
@@ -355,14 +373,51 @@ open class SCHudView: UIView, SCHudViewProtocol {
             self.title.attributedText = self.setAttributedString(for: self.viewTheme, with: self.titleDesc)
             superView.addSubview(self)
             _ = Timer.scheduledTimer(timeInterval: 0.02, target: self, selector: #selector(self.rotateCube), userInfo: nil, repeats: true)
+            
+            if self.userGestureEnabled { self.addGestures() }
         }
     }
     
     public func hide() {
         DispatchQueue.main.async {
             self.removeFromSuperview()
+            self.removeGestures()
         }
     }
+    
+    // MARK: - Gesture handling
+    private func addGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.cubeTapped))
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.cubePanned))
+     
+        addedGestures.append(tapGesture)
+        addedGestures.append(panGesture)
+        
+        guard let superView = superview else { return }
+        _ = addedGestures.map { superView.addGestureRecognizer($0) }
+    }
+    
+    private func removeGestures() {
+        guard let superView = superview else { return }
+        _ = addedGestures.map { superView.removeGestureRecognizer($0) }
+        addedGestures.removeAll()
+    }
+    
+    @objc private func cubeTapped() {
+        Utility.log(message: "Tapped")
+        initTransform()
+        cube3dLayer.transform = rotationTransform
+    }
+    
+    @objc private func cubePanned(pan: UIPanGestureRecognizer) {
+        let point = pan.translation(in: superview)
+        let ratio = point.y/(superview?.frame.height ?? CGFloat.greatestFiniteMagnitude)
+        let radians = ratio*90/(2*CGFloat.pi)
+        rotationTransform = CATransform3DRotate(rotationTransform, radians, 1.0, 0.0, 0.0)
+        cube3dLayer.transform = rotationTransform
+        Utility.log(message: "Panned, and moved \(point)")
+    }
+    
     
 //    open class func printSomething() {
 //        Utility.log(message: "hello world")
